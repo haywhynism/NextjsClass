@@ -25,7 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         {children}
-        <h1 className="text-3xl font-bold text-red-500 text-center h-64 bg-amber-500">Hello World</h1>
+        {/* <h1 className="text-3xl font-bold text-red-500 text-center h-64 bg-amber-500">Hello World</h1> */}
         </body>
     </html>
   );
