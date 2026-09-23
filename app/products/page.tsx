@@ -33,6 +33,7 @@ const Page = () => {
     async function showDetails(params: number) {
         router.push(`/products/${params}`);
     }
+
     return (
         <>
             <div className=''>
@@ -41,15 +42,13 @@ const Page = () => {
                 {
                     products ? (
                         products.map((product) => (
-                            <div onClick={() => showDetails(product.id)} key={product.id} className='text-amber-50 bg-amber-500 bg-blend-hard-light p-4 rounded-2xl border-2 border-amber-700 mx-auto mb-20 w-96'>
+                            <div onClick={() => showDetails(product.id)} key={product.id} className='text-amber-50 bg-amber-500 bg-blend-hard-light p-4 rounded-2xl border-2 border-amber-700 mx-auto mb-20 w-96 cursor-pointer'>
                                 <Image src={product.image} alt={product.title} width={200} height={200} />
                                 <h1>Title: {product.title}</h1>
                                 <h1>Description: {product.description}</h1>
                                 <h1>Category: {product.category}</h1>
                                 <h1>Price: {product.price}</h1>
                                 <h1>Rating: {product.rating.count}/{product.rating.rate}</h1>
-
-
                             </div>
                         ))
                     ) : (
@@ -57,12 +56,8 @@ const Page = () => {
                             <h1>No products yet</h1>
                         </div>
                     )
-        }
+                }
             </div>
-
-
-
-
         </>
     )
 }
