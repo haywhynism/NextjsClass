@@ -4,8 +4,12 @@ const Page = async () => {
         id: number;
         name: string;
         username: string;
-
-        
+        email: string;
+        address: {
+          street: string;
+          suite: string;
+        };
+        phone: string;
     }
 
     const response = await fetch('https://dummyjson.com/users');
