@@ -7,11 +7,7 @@ const notFound = () => {
 
 
   useEffect(()=>{
-    countDown();
-  }, []);
-
-  let time = 15;
-  function countDown() {
+    let time = 15;
     let timeInterval = setInterval(()=>{
         // time--;
         if (time<=0) {
@@ -19,9 +15,9 @@ const notFound = () => {
         }
        settimeDecrease(time)
     }, 1000);
+  }, []);
 
-
-  }
+  
   
   return (
     <>

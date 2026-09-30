@@ -1,4 +1,6 @@
+
 import {NextRequest} from "next/server";
+import { connectDb } from "../lib/util/db/connectDb";
 
 interface User {
     id: number;
@@ -53,13 +55,14 @@ const users: User[] = [
 ];
 
 export async function GET() {
+    await connectDb()
     return Response.json ({
         message: "I got your request",
         data: users,
     });
 }
 
-export async function POSt(params: NextRequest) {
+export async function POST(params: NextRequest) {
     let newUser = await params.json();
     console.log(newUser);
     let newId = users.length + 1;

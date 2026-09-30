@@ -1,6 +1,9 @@
+import User from "@/app/lib/models/Users";
+import { connectDb } from "@/app/lib/util/db/connectDb";
 import {NextRequest} from "next/server";
 
-interface User {
+
+export default interface UserType {
     id: number;
     name: string;
     age: number;
@@ -10,9 +13,9 @@ interface User {
     password: string
 }
 
-const users: User[] = [
+const users: UserType[] = [
     {
-        id: 1,
+        id: 1,  
         name: "John Doe",
         age: 20,
         gender: "male",
@@ -59,26 +62,47 @@ const users: User[] = [
 ]
 
 export async function GET() {
+   await connectDb();
+   const allUsers = await User.find();
+
+   if(!allUsers) {
+    return Response.json(
+        {
+            message: "No registered users",
+
+        },
+        {
+            status: 404
+        }
+    )
+   }
     return Response.json ({
         message: "I got login request",
-        data: users,
+        data: allUsers,
     });
 }
 
 export async function POST(params: NextRequest) {
-    let newUser = await params.json();
-    console.log(newUser);
-    let newId = users.length + 1;
-    let user = users.find((c)=> {
-        return c.email == newUser.email && c.password == newUser.password;
+
+    let userDetails = await params.json();
+
+    let user = await User.findOne({
+        email: userDetails.email,
+        password: userDetails.password,
     });
+    // let newUser = await params.json();
+    // console.log(newUser);
+    // let newId = users.length + 1;
+    // let user = users.find((c)=> {
+    //     return c.email == newUser.email && c.password == newUser.password;
+    // });
     // users.push({...newUser, id: newId});
 
     if (!user) {
        return Response.json(
         {
-            message: "I got your login post request",
-            data: "Invalid password or email",
+            message: "Invalid password or email",
+            data: "",
         },
         {
             status: 404,
@@ -86,8 +110,8 @@ export async function POST(params: NextRequest) {
        ) 
     }
     return Response.json({
-        message: "I got your login request",
-        data: users,
+        message: "login Successful",
+        data: user,
     },
     {
         status: 200,
