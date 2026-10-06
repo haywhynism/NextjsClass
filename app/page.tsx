@@ -1,4 +1,4 @@
-
+import { connectDb } from "@/app/lib/util/db/connectDb";
 export default function Home() {
 const userObj = {
   name: "john",
