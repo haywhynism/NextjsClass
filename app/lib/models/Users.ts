@@ -35,8 +35,18 @@ password: {
 userSchema.pre("save", async function() {
     if (!this.isModified("password")) {
         return
-    } this.password = await bcrypt.hash(this.password, 10)
+    } this.password = await bcrypt.hash(this.password, 20)
 })
+
+userSchema.methods.validatePassword = function (
+    password: string,
+    callback: (err: Error | null, same?: boolean)=>void,
+
+){
+    bcrypt.compare(password, this.password, (err, same)=>{
+        callback(err, same)
+    })
+}
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
