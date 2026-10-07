@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 import { unique } from 'next/dist/build/utils';
 
@@ -30,6 +31,12 @@ password: {
 },
 
 });
+
+userSchema.pre("save", async function() {
+    if (!this.isModified("password")) {
+        return
+    } this.password = await bcrypt.hash(this.password, 10)
+})
 
 const User = mongoose.models.User || mongoose.model("User", userSchema);
 
